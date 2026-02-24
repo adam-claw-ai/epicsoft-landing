@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EpicSoft — Managed SaaS Products for Traffic Teams</title>
+    <meta name="description" content="Get fully managed instances of Epic products. No DevOps, no server headaches. Pick a product, launch in minutes, scale without limits.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0e17;
+            --bg-card: #111827;
+            --bg-card-hover: #1a2332;
+            --border: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.15);
+            --green: #10b981;
+            --purple: #a78bfa;
+            --orange: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+
+        nav a {
+            color: var(--bg);
+            background: var(--accent);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        nav a:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            background: var(--bg-card);
+        }
+
+        .badge::before { content: '⚡'; }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+        .btn {
+            padding: 0.85rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary { background: var(--accent); color: var(--bg); }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-4px); }
+
+        .product-card.coming-soon { opacity: 0.7; }
+        .product-card.coming-soon:hover { opacity: 0.85; border-color: var(--purple); }
+
+        .product-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .status-live { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .status-coming { background: rgba(167, 139, 250, 0.15); color: var(--purple); }
+
+        .product-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .product-card .product-tagline { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; }
+        .product-card .product-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .product-features li {
+            padding: 0.4rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .product-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+        .coming-soon .product-features li::before { color: var(--purple); }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-price span { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .product-price-note { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+        /* How it works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .step:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-4px); }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .step h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .step p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Why */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .why-card:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+        .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .why-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .why-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* FAQ */
+        .faq-list { max-width: 700px; }
+
+        .faq-item { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+
+        .faq-q {
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-q::after { content: '+'; font-size: 1.5rem; color: var(--accent); }
+        .faq-item.open .faq-q::after { content: '−'; }
+
+        .faq-a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.open .faq-a { max-height: 200px; padding-top: 1rem; }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Newsletter */
+        .notify-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 400px;
+        }
+
+        .notify-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .notify-form input:focus { border-color: var(--accent); }
+
+        .notify-form .btn { padding: 0.75rem 1.25rem; font-size: 0.9rem; white-space: nowrap; }
+
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .notify-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Epic<span>Soft</span></div>
+    <a href="#products">Explore Products</a>
+</nav>
+
+<div class="hero">
+    <div class="badge">Managed SaaS for traffic teams</div>
+    <h1>Pick a product. <span class="highlight">Launch in minutes.</span></h1>
+    <p>EpicSoft gives your team fully managed instances of battle-tested traffic tools. No servers, no DevOps, no bullshit — just pick, pay, and start making money.</p>
+    <div class="cta-group">
+        <a href="#products" class="btn btn-primary">See Products →</a>
+        <a href="#how" class="btn btn-outline">How It Works</a>
+    </div>
+</div>
+
+<section id="products">
+    <div class="section-label">Products</div>
+    <h2>Choose your weapon</h2>
+    <p class="section-desc">Each product is a fully managed, dedicated instance. Your data, your rules, our infrastructure.</p>
+
+    <div class="products-grid">
+        <!-- EpicPWA -->
+        <div class="product-card">
+            <div class="product-status status-live">● Available Now</div>
+            <div class="product-icon">📱</div>
+            <h3>EpicPWA</h3>
+            <div class="product-tagline">PWA Platform for Traffic Teams</div>
+            <p class="product-desc">Create, manage, and scale PWA apps for your traffic campaigns. Push notifications, custom domains, team management, analytics — everything out of the box.</p>
+            <ul class="product-features">
+                <li>Unlimited PWA apps</li>
+                <li>Push notifications built-in</li>
+                <li>Custom domains & SSL</li>
+                <li>Team access (up to 10 seats)</li>
+                <li>Advanced analytics & stats</li>
+                <li>PWA templates library</li>
+                <li>Daily backups</li>
+                <li>Dedicated Hetzner server</li>
+            </ul>
+            <div class="product-price">$600<span>/mo</span></div>
+            <div class="product-price-note">Annual billing. $999/mo if monthly.</div>
+            <a href="#" class="btn btn-primary" style="text-align:center;">Get EpicPWA →</a>
+        </div>
+
+        <!-- EpicAds -->
+        <div class="product-card coming-soon">
+            <div class="product-status status-coming">◐ Coming Soon</div>
+            <div class="product-icon">📢</div>
+            <h3>EpicAds</h3>
+            <div class="product-tagline">Your Own Ad Network</div>
+            <p class="product-desc">Launch your own advertising network with Push, InPage, and OnClick formats. Full campaign management, SSP/DSP, real-time bidding, and advertiser self-serve portal.</p>
+            <ul class="product-features">
+                <li>Push, InPage & OnClick formats</li>
+                <li>Advertiser & publisher panels</li>
+                <li>Real-time statistics</li>
+                <li>Anti-fraud & blacklists</li>
+                <li>Campaign automation</li>
+                <li>Multi-domain support</li>
+                <li>API access</li>
+                <li>Dedicated infrastructure</li>
+            </ul>
+            <div class="product-price" style="color: var(--purple);">TBA</div>
+            <div class="product-price-note">Pricing announced at launch.</div>
+            <form class="notify-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=color:var(--green)>✓ We\'ll notify you at launch!</p>';">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit" class="btn btn-outline" style="border-color: var(--purple); color: var(--purple);">Notify Me</button>
+            </form>
+        </div>
+
+        <!-- More coming -->
+        <div class="product-card coming-soon" style="justify-content: center; align-items: center; text-align: center; min-height: 400px;">
+            <div class="product-icon" style="font-size: 3rem;">🚀</div>
+            <h3 style="margin-bottom: 1rem;">More Products Coming</h3>
+            <p class="product-desc" style="text-align: center;">We're building a suite of managed tools for traffic teams. Stay tuned for new products launching throughout 2026.</p>
+            <form class="notify-form" style="margin: 0 auto;" onsubmit="event.preventDefault(); this.innerHTML='<p style=color:var(--green)>✓ You\'re on the list!</p>';">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit" class="btn btn-outline">Stay Updated</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section id="how">
+    <div class="section-label">How It Works</div>
+    <h2>Live in three steps</h2>
+    <p class="section-desc">No calls with sales. No waiting for setup. Pick a product and go.</p>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <h3>Pick a Product</h3>
+            <p>Choose the tool your team needs. Each product is a standalone managed instance with full features.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <h3>Pay & Provision</h3>
+            <p>Top up your balance and purchase an instance. We spin up dedicated infrastructure on Hetzner in under 5 minutes.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <h3>Launch & Scale</h3>
+            <p>Connect your domain, invite your team, and start working. Full control, zero maintenance — we handle the rest.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="section-label">Why EpicSoft</div>
+    <h2>Built for teams that make money</h2>
+    <p class="section-desc">Stop wasting time on infrastructure. Focus on what actually makes you money.</p>
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="why-icon">🖥️</div>
+            <h3>Dedicated Instances</h3>
+            <p>Your own server, database, and admin panel. No shared resources, no noisy neighbors, no data mixing.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">⚡</div>
+            <h3>Zero DevOps</h3>
+            <p>Servers, updates, backups, SSL, monitoring — all handled. Provisioned via Laravel Forge on Hetzner.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">👥</div>
+            <h3>Team-First</h3>
+            <p>Built for teams of 2-50. Roles, permissions, shared dashboards. Not another solo-freelancer tool.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🔒</div>
+            <h3>Fully Isolated</h3>
+            <p>Each instance runs in complete isolation. Your campaigns, data, and domains — separated from everyone else.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">💰</div>
+            <h3>All-Inclusive Pricing</h3>
+            <p>Infrastructure included in the price. No surprise server bills. One predictable monthly cost.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🚀</div>
+            <h3>Battle-Tested</h3>
+            <p>These aren't MVPs — they're products running real traffic at scale. You get the same system the pros use.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="section-label">FAQ</div>
+    <h2>Common questions</h2>
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-q">What exactly is EpicSoft?</div>
+            <div class="faq-a">EpicSoft is a platform where traffic teams can purchase fully managed instances of proven tools — starting with EpicPWA, with more products launching soon. Think of it as a marketplace for managed traffic infrastructure.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Do I need technical knowledge?</div>
+            <div class="faq-a">No. We handle all server management, updates, and infrastructure. You use the product through a clean admin panel — same as any SaaS tool.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">What's included in the price?</div>
+            <div class="faq-a">Everything. Dedicated Hetzner server, SSL certificates, automated backups, monitoring, updates, and support. No hidden fees, no extra hosting costs.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can I run multiple products?</div>
+            <div class="faq-a">Yes. Each product is a separate instance. You can run EpicPWA and EpicAds (when available) simultaneously, each on their own dedicated server.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">How fast is setup?</div>
+            <div class="faq-a">Under 5 minutes. After payment, your instance is provisioned automatically. Connect your domain and you're live.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Is there a free trial?</div>
+            <div class="faq-a">No free trial since each instance requires dedicated server provisioning. Monthly plans have no lock-in — cancel anytime.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Will more products be added?</div>
+            <div class="faq-a">Yes. We're building a full suite of managed tools for traffic teams. Subscribe to get notified when new products launch.</div>
+        </div>
+    </div>
+</section>
+
+<div class="cta-section">
+    <h2>Ready to stop managing servers?</h2>
+    <p class="section-desc" style="margin: 1rem auto 2rem;">Pick a product and launch your instance in under 5 minutes.</p>
+    <a href="#products" class="btn btn-primary">Explore Products →</a>
+</div>
+
+<footer>
+    <p>© 2026 EpicSoft. Built by the team behind <a href="https://epicpwa.net">EpicPWA</a> & <a href="https://epicads.net">EpicAds</a>.</p>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+});
+</script>
+
+</body>
+</html>
